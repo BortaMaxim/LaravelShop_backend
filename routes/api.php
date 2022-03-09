@@ -21,5 +21,6 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     Route::post('/login', [UserController::class, 'login']);
     Route::get('/user-info', [UserController::class, 'userInfo']);
     Route::get('/logout', [UserController::class, 'logout']);
+    Route::post('/update-profile', [UserController::class, 'updateProfile']);
 });
 

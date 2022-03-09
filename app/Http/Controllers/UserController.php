@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\StoreLoginRequest;
 use App\Http\Requests\Auth\StoreRegisterRequest;
+use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 
 class UserController extends Controller
 {
@@ -80,5 +82,28 @@ class UserController extends Controller
             'success' => true,
             'message' => $responseMessage
         ], 200);
+    }
+
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        $request->validated();
+
+        if ($avatar = $request->file('avatar')) {
+            $avatar_name = $request->avatar->getClientOriginalName();
+            $avatar->move('avatars/', $avatar_name);
+        }
+
+        $userProfile = Auth::user();
+        $userProfile->email = $request->email;
+        $userProfile->name = $request->name;
+        $userProfile->password = Hash::make($request->password);
+        $userProfile->avatar = $avatar_name;
+        $userProfile->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'updated success',
+            'data' => $userProfile
+        ]);
     }
 }
