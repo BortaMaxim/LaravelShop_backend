@@ -101,7 +101,7 @@ class UserController extends Controller
         $userProfile->save();
 
         return response()->json([
-            'success' => true,
+            'update_success' => true,
             'message' => 'updated success',
             'data' => $userProfile
         ]);

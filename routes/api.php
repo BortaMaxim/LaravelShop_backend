@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +26,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     Route::post('/update-profile', [UserController::class, 'updateProfile']);
 });
 
+Route::get('categories', [CategoryController::class, 'getCategories']);
+Route::get('categories/{id}/get-one', [CategoryController::class, 'categoriesGetOne']);
+Route::get('products', [ProductController::class, 'getProducts']);
+Route::get('products/{id}/get-one', [ProductController::class, 'productGetOne']);
