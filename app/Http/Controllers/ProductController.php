@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,6 @@ class ProductController extends Controller
 
     public function productGetOne($id)
     {
-        return Product::findOrFail($id);
+        return new ProductResource(Product::findOrFail($id));
     }
 }
