@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function getProducts()
+    public function getProducts($limit)
     {
-        return Product::get();
+        $products = new Product();
+        return $products->paginate($limit);
     }
 
     public function productGetOne($id)
