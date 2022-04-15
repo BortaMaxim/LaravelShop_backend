@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     Route::post('/register', [UserController::class, 'register']);
     Route::post('/login', [UserController::class, 'login']);
@@ -27,6 +26,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
 });
 
 Route::get('categories', [CategoryController::class, 'getCategories']);
-Route::get('categories/{id}/get-one', [CategoryController::class, 'categoriesGetOne']);
-Route::get('products/limit/{limit}', [ProductController::class, 'getProducts']);
+Route::get('categories/get-one/{id}', [CategoryController::class, 'categoriesGetOne']);
+Route::get('products/limit/{limit}', [ProductController::class, 'getProductsLimit']);
 Route::get('products/{id}/get-one', [ProductController::class, 'productGetOne']);
+Route::post('products/filter', [ProductController::class, 'filterProducts']);
