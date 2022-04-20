@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductGallery;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -17,6 +18,7 @@ class ProductResource extends JsonResource
     public function toArray($request)
     {
         $category = Category::find($this->category_id);
+        $product_galleries = ProductGalleryResource::collection(ProductGallery::where('product_id', $this->id)->get());
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -24,7 +26,8 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'product_img' => $this->product_img,
             'category_id' => $category->name,
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at,
+            'product_gallery' => $product_galleries
         ];
     }
 }

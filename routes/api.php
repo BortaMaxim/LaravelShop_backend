@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BasketController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -23,6 +24,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     Route::get('/user-info', [UserController::class, 'userInfo']);
     Route::get('/logout', [UserController::class, 'logout']);
     Route::post('/update-profile', [UserController::class, 'updateProfile']);
+    Route::get('add-to-cart/{id}', [BasketController::class, 'addToCart']);
 });
 
 Route::get('categories', [CategoryController::class, 'getCategories']);
