@@ -24,9 +24,6 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     Route::get('/user-info', [UserController::class, 'userInfo']);
     Route::get('/logout', [UserController::class, 'logout']);
     Route::post('/update-profile', [UserController::class, 'updateProfile']);
-    Route::get('add-to-basket/{id}', [BasketController::class, 'addToBasket']);
-    Route::patch('update-basket', [BasketController::class, 'updateBasket']);
-    Route::delete('remove-from-basket', [BasketController::class, 'removeFromBasket']);
 });
 
 Route::get('categories', [CategoryController::class, 'getCategories']);

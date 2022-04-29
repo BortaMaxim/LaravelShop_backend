@@ -22,8 +22,10 @@ class ProductFactory extends Factory
             'title' => $this->faker->text('15'),
             'description' => $this->faker->text('50'),
             'price' => $this->faker->randomNumber(4, false),
+            'quantity' => 1,
+            'selected' => false,
             'product_img' => "https://source.unsplash.com/random/400x300?sig=$imgRand",
-            'category_id' => rand(31, 35)
+            'category_id' => rand(1, 5)
         ];
     }
 }

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('price');
+            $table->string('quantity')->default(1)->nullable();
+            $table->boolean('selected')->default(false)->nullable();
             $table->string('product_img');
             $table->foreignId('category_id')
                 ->constrained('categories')

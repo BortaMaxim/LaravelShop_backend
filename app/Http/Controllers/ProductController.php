@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
-use phpDocumentor\Reflection\Types\Null_;
 
 class ProductController extends Controller
 {
