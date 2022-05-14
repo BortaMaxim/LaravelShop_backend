@@ -20,6 +20,7 @@ return new class extends Migration
                 ->constrained('products')
                 ->references('id')
                 ->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

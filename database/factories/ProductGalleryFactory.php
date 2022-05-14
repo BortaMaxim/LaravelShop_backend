@@ -19,7 +19,7 @@ class ProductGalleryFactory extends Factory
         $randomImg = rand(1, 100);
         return [
             'images' => "https://source.unsplash.com/random/400x300?sig=$randomImg",
-            'product_id' => rand(1, 400)
+            'product_id' => rand(1, 100)
         ];
     }
 }

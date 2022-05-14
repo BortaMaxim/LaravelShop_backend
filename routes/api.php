@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\BasketController;
+use App\Http\Controllers\CategoriesManagementController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductsManagementController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserManagmentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +26,19 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     Route::get('/user-info', [UserController::class, 'userInfo']);
     Route::get('/logout', [UserController::class, 'logout']);
     Route::post('/update-profile', [UserController::class, 'updateProfile']);
+    //Admin - UserManagement
+    Route::post('/create-users', [UserManagmentController::class, 'createUsers']);
+    Route::get('/get-users', [UserManagmentController::class, 'getUsers']);
+    Route::post('/update-users/{id}', [UserManagmentController::class, 'updateUsers']);
+    Route::delete('/delete-users/{id}', [UserManagmentController::class, 'deleteUsers']);
+    //Manager - CategoriesManagement
+    Route::post('/categories/create', [CategoriesManagementController::class, 'createCategory']);
+    Route::put('/categories/update/{id}', [CategoriesManagementController::class, 'updateCategory']);
+    Route::delete('/categories/delete/{id}', [CategoriesManagementController::class, 'deleteCategory']);
+    //Manager - ProductsManagement
+    Route::post('/get-products/create', [ProductsManagementController::class, 'createProduct']);
+    Route::post('/get-products/update/{id}', [ProductsManagementController::class, 'updateProduct']);
+    Route::delete('/get-products/delete/{id}', [ProductsManagementController::class, 'deleteProduct']);
 });
 
 Route::get('categories', [CategoryController::class, 'getCategories']);

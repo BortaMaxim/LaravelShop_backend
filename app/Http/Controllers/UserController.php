@@ -6,10 +6,8 @@ use App\Http\Requests\Auth\StoreLoginRequest;
 use App\Http\Requests\Auth\StoreRegisterRequest;
 use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 
 class UserController extends Controller
 {
