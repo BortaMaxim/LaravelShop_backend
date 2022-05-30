@@ -17,9 +17,27 @@ class ProductsManagementController extends Controller
         $this->middleware('auth:api');
     }
 
+    public function getAllProducts()
+    {
+        if (Gate::any(['isManager', 'isAdmin'])) {
+            return $this->products->all();
+        }else {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not Manager or Admin!'
+            ]);
+        }
+    }
+
+    public function getOneProduct($id)
+    {
+        $product = $this->products->find($id);
+        return $product;
+    }
+
     public function createProduct(StoreProductsRequest $request)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::any(['isManager', 'isAdmin'])) {
             $request->validated();
             if ($product_image = $request->file('product_img')) {
                 $product_image_name = $request->product_img->getClientOriginalName();
@@ -40,14 +58,14 @@ class ProductsManagementController extends Controller
         }else {
             return response()->json([
                 'success' => false,
-                'message' => 'You are not Manager!'
+                'message' => 'You are not Manager or Admin!'
             ]);
         }
     }
 
     public function updateProduct(UpdateProductsRequest $request, $id)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::any(['isManager', 'isAdmin'])) {
             $product = $this->products->find($id);
             $request->validated();
             if ($product_image = $request->file('product_img')) {
@@ -68,14 +86,14 @@ class ProductsManagementController extends Controller
         }else {
             return response()->json([
                 'success' => false,
-                'message' => 'You are not Manager!'
+                'message' => 'You are not Manager or Admin!'
             ]);
         }
     }
 
     public function deleteProduct($id)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::any(['isManager', 'isAdmin'])) {
             $product = $this->products->findOrFail($id);
             $product->destroy($id);
             return response()->json([
@@ -85,7 +103,7 @@ class ProductsManagementController extends Controller
         }else {
             return response()->json([
                 'success' => false,
-                'message' => 'You are not Manager!'
+                'message' => 'You are not Manager or Admin!'
             ]);
         }
     }

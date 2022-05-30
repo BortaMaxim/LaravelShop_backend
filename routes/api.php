@@ -29,13 +29,17 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     //Admin - UserManagement
     Route::post('/create-users', [UserManagmentController::class, 'createUsers']);
     Route::get('/get-users', [UserManagmentController::class, 'getUsers']);
+    Route::get('/get-one-user/{id}', [UserManagmentController::class, 'getOneUsers']);
     Route::post('/update-users/{id}', [UserManagmentController::class, 'updateUsers']);
     Route::delete('/delete-users/{id}', [UserManagmentController::class, 'deleteUsers']);
     //Manager - CategoriesManagement
     Route::post('/categories/create', [CategoriesManagementController::class, 'createCategory']);
-    Route::put('/categories/update/{id}', [CategoriesManagementController::class, 'updateCategory']);
+    Route::get('/categories/view-one/{id}', [CategoriesManagementController::class, 'viewOneCategory']);
+    Route::post('/categories/update/{id}', [CategoriesManagementController::class, 'updateCategory']);
     Route::delete('/categories/delete/{id}', [CategoriesManagementController::class, 'deleteCategory']);
     //Manager - ProductsManagement
+    Route::get('/get-all-products', [ProductsManagementController::class, 'getAllProducts']);
+    Route::get('/get-one-product/{id}', [ProductsManagementController::class, 'getOneProduct']);
     Route::post('/get-products/create', [ProductsManagementController::class, 'createProduct']);
     Route::post('/get-products/update/{id}', [ProductsManagementController::class, 'updateProduct']);
     Route::delete('/get-products/delete/{id}', [ProductsManagementController::class, 'deleteProduct']);

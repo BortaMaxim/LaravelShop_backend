@@ -17,9 +17,16 @@ class CategoriesManagementController extends Controller
         $this->categories = new Category();
     }
 
+    public function viewOneCategory($id)
+    {
+        if (Gate::any(['isManager', 'isAdmin'])) {
+            return $this->categories->findOrFail($id);
+        }
+    }
+
     public function createCategory(StoreCategoryRequest $request)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::any(['isManager', 'isAdmin'])) {
             $request->validated();
             $this->categories->create(['name' => $request->name]);
             return response()->json([
@@ -33,11 +40,10 @@ class CategoriesManagementController extends Controller
 
     public function updateCategory(UpdateCategoryRequest $request, $id)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::any(['isManager', 'isAdmin'])) {
             $category = $this->categories->find($id);
-            $category->update([
-                'name' => $request->name,
-            ]);
+            $category->name = $request->name;
+            $category->save();
             return response()->json([
                 'success' => true,
                 'message' => 'Category updated!'
@@ -49,7 +55,7 @@ class CategoriesManagementController extends Controller
 
     public function deleteCategory($id)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::any(['isManager', 'isAdmin'])) {
             $category = $this->categories->find($id);
             $category->destroy($id);
             return response()->json([

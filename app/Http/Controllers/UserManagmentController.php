@@ -58,7 +58,11 @@ class UserManagmentController extends Controller
                 'message' => 'You are not Admin!'
             ]);
         }
+    }
 
+    public function getOneUsers($id)
+    {
+        return $this->user->find($id);
     }
 
     public function updateUsers(UpdateUsersRequest $request, $id)
