@@ -17,7 +17,6 @@
     },
     "dependencies": {
         "@mui/icons-material": "^5.5.0",
-        "@mui/material": "^5.4.4",
-        "react-infinite-scroll-component": "^6.1.0"
+        "@mui/material": "^5.4.4"
     }
 }

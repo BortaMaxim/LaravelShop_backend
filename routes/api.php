@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriesManagementController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsManagementController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserManagmentController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,9 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     Route::post('/get-products/create', [ProductsManagementController::class, 'createProduct']);
     Route::post('/get-products/update/{id}', [ProductsManagementController::class, 'updateProduct']);
     Route::delete('/get-products/delete/{id}', [ProductsManagementController::class, 'deleteProduct']);
+    //Stripe
+    Route::get('/stripe', [StripeController::class, 'stripe']);
+    Route::post('/stripe', [StripeController::class, 'stripePost']);
 });
 
 Route::get('categories', [CategoryController::class, 'getCategories']);
