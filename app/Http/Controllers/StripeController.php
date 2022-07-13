@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Stripe\Charge;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
@@ -10,15 +11,10 @@ use Stripe\StripeClient;
 
 class StripeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     public function stripe()
     {
         $stripe = new StripeClient(env('STRIPE_SECRET'));
-        return $stripe->paymentIntents->all(['limit' => 3]);
+        return $stripe->paymentIntents->all(['limit' => 1]);
     }
 
     public function stripePost(Request $request)
@@ -27,7 +23,6 @@ class StripeController extends Controller
         $intent = PaymentIntent::create([
             "amount" => $request->amount * 100,
             "currency" => $request->currency,
-            "receipt_email" => auth()->user()->email,
         ]);
 
         return response()->json([

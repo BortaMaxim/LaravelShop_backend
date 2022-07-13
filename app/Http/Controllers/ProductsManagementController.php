@@ -13,8 +13,8 @@ class ProductsManagementController extends Controller
     protected $products;
     public function __construct()
     {
+        $this->middleware("auth:api");
         $this->products = new Product();
-        $this->middleware('auth:api');
     }
 
     public function getAllProducts()

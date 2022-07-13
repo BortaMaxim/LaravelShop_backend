@@ -14,7 +14,7 @@ class ProductController extends Controller
         return $products->paginate($limit);
     }
 
-    public function productGetOne($id)
+    public function productGetOne($id): ProductResource
     {
         return new ProductResource(Product::findOrFail($id));
     }
@@ -25,7 +25,6 @@ class ProductController extends Controller
         if ($request->has('title')) {
             return $product->where('title', 'LIKE', '%' . $request->title . '%')->get();
         }
-
         return $product;
     }
 

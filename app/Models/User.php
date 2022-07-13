@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Contracts\Like\Likeable;
+use App\Models\Concern\Likes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,9 +14,10 @@ use Laravel\Passport\HasApiTokens;
 
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements Likeable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Billable;
+    use Likes;
 
     /**
      * The attributes that are mass assignable.

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CategoriesManagementController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsManagementController;
 use App\Http\Controllers\StripeController;
@@ -47,10 +49,20 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     //Stripe
     Route::get('/stripe', [StripeController::class, 'stripe']);
     Route::post('/stripe', [StripeController::class, 'stripePost']);
+    //Comments - Products
+    Route::post('/comments/{id}', [CommentController::class, 'storeCommentToProduct']);
+    //Likes - Products
+    Route::post('/product/{product_id}/like', [LikeController::class, 'like'])->middleware('auth:api');
+    Route::post('/product/{product_id}/dislike', [LikeController::class, 'dislike'])->middleware('auth:api');
 });
 
 Route::get('categories', [CategoryController::class, 'getCategories']);
 Route::get('categories/get-one/{id}', [CategoryController::class, 'categoriesGetOne']);
-Route::get('products/limit/{limit}', [ProductController::class, 'getProductsLimit']);
+Route::get('/products/limit/{limit}', [ProductController::class, 'getProductsLimit']);
 Route::get('products/{id}/get-one', [ProductController::class, 'productGetOne']);
 Route::post('products/filter', [ProductController::class, 'filterProducts']);
+//Comments - Products
+Route::get('/comments/{id}', [CommentController::class, 'getCommentOfProduct']);
+//Likes - Products
+Route::get('/product/{id}/likes', [LikeController::class, 'getLikes']);
+Route::get('/product/{id}/dislikes', [LikeController::class, 'getDislikes']);

@@ -13,7 +13,7 @@ class CategoriesManagementController extends Controller
     protected $categories;
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware("auth:api");
         $this->categories = new Category();
     }
 
