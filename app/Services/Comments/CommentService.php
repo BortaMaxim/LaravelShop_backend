@@ -11,7 +11,7 @@ class CommentService implements CommentInterface
         $product = $product->find($id);
         $auth_user = auth()->user();
 
-        $product->comments()->create([
+        $newComment = $product->comments()->create([
             'body' => $request->body,
             'user_id' => auth()->id(),
             'user_avatar' => $auth_user->avatar
@@ -19,7 +19,8 @@ class CommentService implements CommentInterface
 
         return response()->json([
             'success' => true,
-            'message' => 'Comment created '
+            'message' => 'Comment created ',
+            'comment' => new CommentResource($newComment)
         ]);
     }
 

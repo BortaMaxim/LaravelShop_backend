@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\StoreProductsRequest;
 use App\Http\Requests\Admin\UpdateProductsRequest;
+use App\Http\Resources\ProductResourceManagement;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -20,7 +21,7 @@ class ProductsManagementController extends Controller
     public function getAllProducts()
     {
         if (Gate::any(['isManager', 'isAdmin'])) {
-            return $this->products->all();
+            return ProductResourceManagement::collection($this->products->all());
         }else {
             return response()->json([
                 'success' => false,

@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductsManagementController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserManagmentController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,14 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     Route::get('/user-info', [UserController::class, 'userInfo']);
     Route::get('/logout', [UserController::class, 'logout']);
     Route::post('/update-profile', [UserController::class, 'updateProfile']);
+    //Email verification
+    Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
+        ->middleware(['signed', 'throttle'])
+        ->name('verification.verify');
+    Route::get('/email/resend', [VerificationController::class, 'resend'])
+        ->middleware('auth:api', 'throttle')
+        ->name('verification.send');
+
     //Admin - UserManagement
     Route::post('/create-users', [UserManagmentController::class, 'createUsers']);
     Route::get('/get-users', [UserManagmentController::class, 'getUsers']);
@@ -50,7 +59,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     Route::get('/stripe', [StripeController::class, 'stripe']);
     Route::post('/stripe', [StripeController::class, 'stripePost']);
     //Comments - Products
-    Route::post('/comments/{id}', [CommentController::class, 'storeCommentToProduct']);
+    Route::post('/comments/{id}', [CommentController::class, 'storeCommentToProduct'])->middleware('auth:api');
     //Likes - Products
     Route::post('/product/{product_id}/like', [LikeController::class, 'like'])->middleware('auth:api');
     Route::post('/product/{product_id}/dislike', [LikeController::class, 'dislike'])->middleware('auth:api');
@@ -66,3 +75,4 @@ Route::get('/comments/{id}', [CommentController::class, 'getCommentOfProduct']);
 //Likes - Products
 Route::get('/product/{id}/likes', [LikeController::class, 'getLikes']);
 Route::get('/product/{id}/dislikes', [LikeController::class, 'getDislikes']);
+

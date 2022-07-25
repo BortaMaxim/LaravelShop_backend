@@ -14,7 +14,6 @@ class CommentController extends Controller
 
     public function __construct()
     {
-        $this->middleware("auth:api");
         $this->product = new Product();
         $this->comment = new Comment();
     }

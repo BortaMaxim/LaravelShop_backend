@@ -6,6 +6,7 @@ use App\Http\Requests\Auth\StoreLoginRequest;
 use App\Http\Requests\Auth\StoreRegisterRequest;
 use App\Http\Requests\Auth\UpdateProfileRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,11 +15,11 @@ class UserController extends Controller
     protected $user;
     public function __construct()
     {
-        $this->middleware("auth:api",["except" => ["login","register"]]);
+        $this->middleware("auth:api", ["except" => ["login", "register"]]);
         $this->user = new User();
     }
 
-    public function register(StoreRegisterRequest $request)
+    public function register(StoreRegisterRequest $request): \Illuminate\Http\JsonResponse
     {
         $request->validated();
         $data = [
@@ -26,14 +27,16 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ];
-        $this->user->create($data);
+        $user = $this->user->create($data);
+        event(new Registered($user));
+
         return response()->json([
             'success' => true,
-            'message' => 'Register Successfully !'
+            'message' => 'Register Successfully!  Please confirm your email on '. " http://localhost:8025/",
         ], 200);
     }
 
-    public function login(StoreLoginRequest $request)
+    public function login(StoreLoginRequest $request): \Illuminate\Http\JsonResponse
     {
         $request->validated();
         $credentials = $request->only('email', 'password');
@@ -61,7 +64,7 @@ class UserController extends Controller
         }
     }
 
-    public function userInfo()
+    public function userInfo(): \Illuminate\Http\JsonResponse
     {
         $data = auth()->guard('api')->user();
         return response()->json([
@@ -71,7 +74,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function logout()
+    public function logout(): \Illuminate\Http\JsonResponse
     {
         $user = Auth::guard('api')->user()->token();
         $user->revoke();
@@ -82,7 +85,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function updateProfile(UpdateProfileRequest $request)
+    public function updateProfile(UpdateProfileRequest $request): \Illuminate\Http\JsonResponse
     {
         $request->validated();
 
