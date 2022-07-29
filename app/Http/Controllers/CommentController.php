@@ -4,27 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Product;
-use App\Services\Comments\CommentService;
+use App\Repositories\Comment\CommentInterface;
 use Illuminate\Http\Request;
+
+/**
+ * @property CommentInterface $comment
+ */
 
 class CommentController extends Controller
 {
-    protected $product;
-    protected $comment;
-
-    public function __construct()
+    public function __construct(CommentInterface $comment)
     {
-        $this->product = new Product();
-        $this->comment = new Comment();
+        $this->comment = $comment;
     }
 
-    public function storeCommentToProduct(Request $request, $id, CommentService $service): \Illuminate\Http\JsonResponse
+    public function storeCommentToProduct(Request $request, $id): \Illuminate\Http\JsonResponse
     {
-        return $service->storeCommentService($request, $id, $this->product);
+        return $this->comment->storeComment($request, $id);
     }
 
-    public function getCommentOfProduct($id, CommentService $service): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function getCommentOfProduct($id)
     {
-        return $service->viewCommentService($id, $this->product);
+        return $this->comment->getComments($id);
     }
 }

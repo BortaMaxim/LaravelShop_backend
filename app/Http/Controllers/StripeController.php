@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Stripe\StripePaymentInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Stripe\Charge;
-use Stripe\PaymentIntent;
-use Stripe\Stripe;
 use Stripe\StripeClient;
 
+/**
+ * @property StripePaymentInterface $stripePayment
+ */
 class StripeController extends Controller
 {
+    public function __construct(StripePaymentInterface $stripePayment)
+    {
+        $this->stripePayment = $stripePayment;
+    }
+
     public function stripe()
     {
         $stripe = new StripeClient(env('STRIPE_SECRET'));
@@ -19,16 +24,6 @@ class StripeController extends Controller
 
     public function stripePost(Request $request)
     {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-        $intent = PaymentIntent::create([
-            "amount" => $request->amount * 100,
-            "currency" => $request->currency,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'client_secret' => $intent->client_secret
-        ]);
-
+        return $this->stripePayment->stripePayment($request);
     }
 }

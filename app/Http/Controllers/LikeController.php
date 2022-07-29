@@ -2,39 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Like;
-use App\Models\Product;
-use App\Services\Likes\LikeService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Repositories\Like\LikeDislikeInterface;
 
+/**
+ * @property LikeDislikeInterface $likes
+ */
 class LikeController extends Controller
 {
-    protected $products;
-    protected $likes;
-    public function __construct()
+    public function __construct(LikeDislikeInterface $likes)
     {
-        $this->products = new Product();
-        $this->likes = new Like();
+        $this->likes = $likes;
     }
 
-    public function like($product_id, LikeService $service): \Illuminate\Http\JsonResponse
+    public function like($product_id): \Illuminate\Http\JsonResponse
     {
-        return $service->storeLikeService($product_id);
+        return $this->likes->storeLike($product_id);
     }
 
-    public function dislike($product_id, LikeService $service): \Illuminate\Http\JsonResponse
+    public function dislike($product_id): \Illuminate\Http\JsonResponse
     {
-        return $service->storeDislikeService($product_id);
+        return $this->likes->storeDislike($product_id);
     }
 
-    public function getLikes($id, LikeService $service): \Illuminate\Http\JsonResponse
+    public function getLikes($id): \Illuminate\Http\JsonResponse
     {
-        return $service->getLikes($id);
+        return $this->likes->getLikes($id);
     }
 
-    public function getDislikes($id, LikeService $service): \Illuminate\Http\JsonResponse
+    public function getDislikes($id)
     {
-        return $service->getDislikes($id);
+        return $this->likes->getDislikes($id);
     }
 }

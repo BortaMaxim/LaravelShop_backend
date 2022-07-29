@@ -14,7 +14,6 @@ use Laravel\Cashier\Billable;
 use Laravel\Passport\HasApiTokens;
 
 
-
 class User extends Authenticatable implements MustVerifyEmail,  Likeable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Billable;

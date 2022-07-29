@@ -177,6 +177,16 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        App\Repositories\Product\ProductRepoServiceProvider::class,
+        App\Repositories\Category\CategoryRepoServiceProvider::class,
+        App\Repositories\Comment\CommentRepoServiceProviders::class,
+        App\Repositories\Like\LikeDislikeRepoService::class,
+        App\Repositories\Stripe\StripeRepoServiceProvider::class,
+        App\Repositories\User\UserRepoServiceProvider::class,
+        App\Repositories\EmailVerification\EmailVerificationRepoServiceProvider::class,
+        App\Repositories\Admin\UserManagement\UserManagementRepoServiceProvider::class,
+        App\Repositories\Admin\CategoryManagement\CategoryManagementRepoServiceProvider::class,
+        App\Repositories\Admin\ProductManagement\ProductManagementRepoServiceProvider::class,
     ],
 
     /*

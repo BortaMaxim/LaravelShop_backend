@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use App\Models\Category;
-use App\Models\Product;
 use App\Models\ProductGallery;
 use Illuminate\Http\Resources\Json\JsonResource;
 

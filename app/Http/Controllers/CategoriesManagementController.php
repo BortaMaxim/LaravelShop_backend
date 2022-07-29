@@ -5,72 +5,39 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Repositories\Admin\CategoryManagement\CategoryManagementInterface;
+use App\Repositories\Category\CategoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
+/**
+ * @property CategoryManagementInterface $category
+ */
 class CategoriesManagementController extends Controller
 {
-    protected $categories;
-    public function __construct()
+    public function __construct(CategoryManagementInterface $category)
     {
         $this->middleware("auth:api");
-        $this->categories = new Category();
+        $this->category = $category;
     }
 
-    public function viewOneCategory($id)
+    public function viewOneCategory(CategoryInterface $category, $id)
     {
-        if (Gate::any(['isManager', 'isAdmin'])) {
-            return $this->categories->findOrFail($id);
-        }
+            return $category->categoriesGetOne($id);
     }
 
     public function createCategory(StoreCategoryRequest $request)
     {
-        if (Gate::any(['isManager', 'isAdmin'])) {
-            $request->validated();
-            $this->categories->create(['name' => $request->name]);
-            return response()->json([
-                'success' => true,
-                'message' => 'Category created!'
-            ]);
-        }else {
-            return $this->exceptionResponse('Manager');
-        }
+        return $this->category->createCategory($request);
     }
 
     public function updateCategory(UpdateCategoryRequest $request, $id)
     {
-        if (Gate::any(['isManager', 'isAdmin'])) {
-            $category = $this->categories->find($id);
-            $category->name = $request->name;
-            $category->save();
-            return response()->json([
-                'success' => true,
-                'message' => 'Category updated!'
-            ]);
-        }else {
-            return $this->exceptionResponse('Manager');
-        }
+        return $this->category->updateCategory($request, $id);
     }
 
     public function deleteCategory($id)
     {
-        if (Gate::any(['isManager', 'isAdmin'])) {
-            $category = $this->categories->find($id);
-            $category->destroy($id);
-            return response()->json([
-                'success' => true,
-                'message' => 'Category deleted!'
-            ]);
-        }else {
-            return $this->exceptionResponse('Manager');
-        }
-    }
-
-    private function exceptionResponse($role) {
-        return response()->json([
-            'success' => false,
-            'message' => "You are not $role!"
-        ]);
+        return $this->category->deleteCategory($id);
     }
 }

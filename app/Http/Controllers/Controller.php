@@ -20,4 +20,12 @@ class Controller extends BaseController
             "token_type" => "bearer",
         ],200);
     }
+
+    public function exceptionResponse($role): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'success' => false,
+            'message' => "You are not $role!"
+        ]);
+    }
 }

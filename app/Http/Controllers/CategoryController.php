@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Repositories\Category\CategoryInterface;
+
+/**
+ * @property CategoryInterface $category
+ */
 
 class CategoryController extends Controller
 {
+
+    public function __construct(CategoryInterface $category)
+    {
+        $this->category = $category;
+    }
+
     public function getCategories()
     {
-        return Category::all();
+        return $this->category->getCategories();
     }
 
     public function categoriesGetOne($id)
     {
-        $category = Category::findOrFail($id);
-        return response()->json([
-            'success' => true,
-            'name' => $category->name,
-            'data' => $category->products
-        ]);
+        return $this->category->categoriesGetOne($id);
     }
 }
