@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Stripe\StripePaymentInterface;
+use App\Repositories\Payments\PaymentInterface;
 use Illuminate\Http\Request;
 use Stripe\StripeClient;
 
 /**
- * @property StripePaymentInterface $stripePayment
+ * @property PaymentInterface $stripePayment
  */
 class StripeController extends Controller
 {
-    public function __construct(StripePaymentInterface $stripePayment)
+    public function __construct(PaymentInterface $stripePayment)
     {
         $this->stripePayment = $stripePayment;
     }
@@ -24,6 +24,6 @@ class StripeController extends Controller
 
     public function stripePost(Request $request)
     {
-        return $this->stripePayment->stripePayment($request);
+        return $this->stripePayment->pay($request);
     }
 }

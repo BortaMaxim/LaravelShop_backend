@@ -181,12 +181,13 @@ return [
         App\Repositories\Category\CategoryRepoServiceProvider::class,
         App\Repositories\Comment\CommentRepoServiceProviders::class,
         App\Repositories\Like\LikeDislikeRepoService::class,
-        App\Repositories\Stripe\StripeRepoServiceProvider::class,
+        App\Repositories\Payments\PaymentRepoServiceProvider::class,
         App\Repositories\User\UserRepoServiceProvider::class,
         App\Repositories\EmailVerification\EmailVerificationRepoServiceProvider::class,
         App\Repositories\Admin\UserManagement\UserManagementRepoServiceProvider::class,
         App\Repositories\Admin\CategoryManagement\CategoryManagementRepoServiceProvider::class,
         App\Repositories\Admin\ProductManagement\ProductManagementRepoServiceProvider::class,
+        App\Repositories\ISOCountry\ISOCountryRepoServiceProvider::class,
     ],
 
     /*

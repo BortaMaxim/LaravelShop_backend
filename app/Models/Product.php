@@ -15,6 +15,7 @@ use App\Contracts\Category\Categoreable;
 use App\Contracts\Product\ProductGallereable;
 use App\Models\Concern\Categories;
 use App\Models\Concern\ProductGaleries;
+use Illuminate\Support\Facades\Cache;
 
 class Product extends Model implements Commentable, Likeable, Categoreable, ProductGallereable
 {
@@ -24,6 +25,7 @@ class Product extends Model implements Commentable, Likeable, Categoreable, Prod
 
     public function getProductsLimit($limit)
     {
+
         return static::paginate($limit);
     }
 
@@ -34,10 +36,10 @@ class Product extends Model implements Commentable, Likeable, Categoreable, Prod
 
      public function filterProducts($request)
      {
-        $product = $this;
+         $products = $this;
         if ($request->has('title')) {
-            return $product->where('title', 'LIKE', '%' . $request->title . '%')->get();
+            return $products->where('title', 'LIKE', '%' . $request->title . '%')->get();
         }
-        return $product;
+        return $products;
     }
 }

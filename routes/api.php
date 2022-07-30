@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriesManagementController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ISOCountriesController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductsManagementController;
@@ -69,11 +70,13 @@ Route::group(['prefix' => 'auth', 'middleware' => 'CORS'], function ($router) {
     Route::post('/product/{product_id}/dislike', [LikeController::class, 'dislike'])->middleware('auth:api');
 });
 
+Route::get('/ISO_countries', [ISOCountriesController::class, 'getISOCountries']);
 Route::get('categories', [CategoryController::class, 'getCategories']);
 Route::get('categories/get-one/{id}', [CategoryController::class, 'categoriesGetOne']);
 Route::get('/products/limit/{limit}', [ProductController::class, 'getProductsLimit']);
 Route::get('products/{id}/get-one', [ProductController::class, 'productGetOne']);
 Route::post('products/filter', [ProductController::class, 'filterProducts']);
+Route::get('/test', [ProductController::class, 'getAllProducts']);
 //Comments - Products
 Route::get('/comments/{id}', [CommentController::class, 'getCommentOfProduct']);
 //Likes - Products

@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Repositories\Stripe;
+namespace App\Repositories\Payments\Stripe;
 
+use App\Repositories\Payments\PaymentInterface;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
 
-class StripePaymentRepository implements StripePaymentInterface
+class StripeService implements PaymentInterface
 {
-    public function stripePayment($request): \Illuminate\Http\JsonResponse
+    /**
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function pay($request): \Illuminate\Http\JsonResponse
     {
         Stripe::setApiKey(env('STRIPE_SECRET'));
         $intent = PaymentIntent::create([
