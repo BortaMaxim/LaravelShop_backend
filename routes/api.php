@@ -76,7 +76,6 @@ Route::get('categories/get-one/{id}', [CategoryController::class, 'categoriesGet
 Route::get('/products/limit/{limit}', [ProductController::class, 'getProductsLimit']);
 Route::get('products/{id}/get-one', [ProductController::class, 'productGetOne']);
 Route::post('products/filter', [ProductController::class, 'filterProducts']);
-Route::get('/test', [ProductController::class, 'getAllProducts']);
 //Comments - Products
 Route::get('/comments/{id}', [CommentController::class, 'getCommentOfProduct']);
 //Likes - Products

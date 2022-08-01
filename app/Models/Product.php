@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
+use App\Contracts\Category\Categoreable;
 use App\Contracts\Comment\Commentable;
 use App\Contracts\Like\Likeable;
+use App\Contracts\Product\ProductGallereable;
 use App\Http\Resources\ProductResource;
+use App\Models\Concern\Categories;
 use App\Models\Concern\Comments;
 use App\Models\Concern\Likes;
+use App\Models\Concern\ProductGaleries;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\Request;
-use App\Contracts\Category\Categoreable;
-use App\Contracts\Product\ProductGallereable;
-use App\Models\Concern\Categories;
-use App\Models\Concern\ProductGaleries;
-use Illuminate\Support\Facades\Cache;
 
 class Product extends Model implements Commentable, Likeable, Categoreable, ProductGallereable
 {
